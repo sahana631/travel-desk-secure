@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Create account · Travel Desk{% endblock %}
+{% block content %}
+  <section class="auth-card">
+    <div class="eyebrow">YOUR TRAVEL DESK</div>
+    <h1>Create your account</h1>
+    <p class="muted">Keep every booking and itinerary in one place.</p>
+    <form method="post" class="stack-form">
+      {{ form.hidden_tag() }}
+      <label for="username">Username</label>
+      {{ form.username(id="username", autofocus=true) }}
+      {% for error in form.username.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
+
+      <label for="password">Password</label>
+      {{ form.password(id="password") }}
+      {% for error in form.password.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
+
+      <button class="button" type="submit">Create account</button>
+    </form>
+    <p class="form-footer">Already have an account? <a href="{{ url_for('login') }}">Log in</a></p>
+  </section>
+{% endblock %}

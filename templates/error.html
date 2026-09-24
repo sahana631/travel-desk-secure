@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Request unavailable · Travel Desk{% endblock %}
+{% block content %}
+  <section class="empty-state">
+    <div class="empty-icon">!</div>
+    <h1>We couldn’t complete that request</h1>
+    <p class="muted">{{ message|clean_text }}</p>
+    <a class="button" href="{{ url_for('dashboard') if current_user else url_for('login') }}">Continue</a>
+  </section>
+{% endblock %}

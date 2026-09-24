@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}{{ form_title }} · Travel Desk{% endblock %}
+{% block content %}
+  <div class="page-heading compact">
+    <div>
+      <div class="eyebrow">TRIP DETAILS</div>
+      <h1>{{ form_title }}</h1>
+    </div>
+    <a class="text-link" href="{{ url_for('dashboard') }}">← Back to trips</a>
+  </div>
+
+  <section class="form-card">
+    <form method="post" class="stack-form">
+      {{ form.hidden_tag() }}
+      <label for="destination">Destination</label>
+      {{ form.destination(id="destination", placeholder="e.g. Lisbon, Portugal", autofocus=true) }}
+      {% for error in form.destination.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
+
+      <div class="form-row">
+        <div>
+          <label for="start_date">Start date</label>
+          {{ form.start_date(id="start_date") }}
+          {% for error in form.start_date.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
+        </div>
+        <div>
+          <label for="end_date">End date</label>
+          {{ form.end_date(id="end_date") }}
+          {% for error in form.end_date.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
+        </div>
+      </div>
+
+      <label for="notes">Notes <span class="optional">(optional)</span></label>
+      {{ form.notes(id="notes", rows=5, placeholder="Anything to remember about this trip?") }}
+      {% for error in form.notes.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
+
+      <div class="form-actions">
+        <a class="button button-ghost" href="{{ url_for('dashboard') }}">Cancel</a>
+        <button class="button" type="submit">{{ "Save changes" if trip else "Book trip" }}</button>
+      </div>
+    </form>
+  </section>
+{% endblock %}

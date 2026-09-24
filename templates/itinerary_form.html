@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Add itinerary item · Travel Desk{% endblock %}
+{% block content %}
+  <div class="page-heading compact">
+    <div>
+      <div class="eyebrow">TRIP #{{ trip.id }}</div>
+      <h1>Add itinerary item</h1>
+      <p class="muted">{{ trip.destination|clean_text }} · {{ trip.start_date }} → {{ trip.end_date }}</p>
+    </div>
+    <a class="text-link" href="{{ url_for('trip_detail', trip_id=trip.id) }}">← Back to trip</a>
+  </div>
+
+  <section class="form-card">
+    <form method="post" class="stack-form">
+      {{ form.hidden_tag() }}
+      <label for="item_type">Type</label>
+      {{ form.item_type(id="item_type") }}
+      {% for error in form.item_type.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
+
+      <label for="item_datetime">Date and time</label>
+      {{ form.item_datetime(id="item_datetime", type="datetime-local") }}
+      {% for error in form.item_datetime.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
+
+      <label for="description">Description <span class="optional">(optional)</span></label>
+      {{ form.description(id="description", rows=5, placeholder="e.g. Check in at the hotel, terminal, confirmation number...") }}
+      {% for error in form.description.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
+
+      <div class="form-actions">
+        <a class="button button-ghost" href="{{ url_for('trip_detail', trip_id=trip.id) }}">Cancel</a>
+        <button class="button" type="submit">Add to itinerary</button>
+      </div>
+    </form>
+  </section>
+{% endblock %}

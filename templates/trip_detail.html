@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}{{ trip.destination|clean_text }} · Travel Desk{% endblock %}
+{% block content %}
+  <div class="page-heading compact">
+    <div>
+      <div class="eyebrow">TRIP #{{ trip.id }}</div>
+      <h1>{{ trip.destination|clean_text }}</h1>
+      <p class="date-range">{{ trip.start_date }} <span>→</span> {{ trip.end_date }}</p>
+    </div>
+    <div class="heading-actions">
+      <a class="button button-small button-ghost" href="{{ url_for('edit_trip', trip_id=trip.id) }}">Edit trip</a>
+      <a class="text-link" href="{{ url_for('dashboard') }}">← All trips</a>
+    </div>
+  </div>
+
+  {% if trip.notes %}
+    <section class="notes-panel">
+      <div class="eyebrow">NOTES</div>
+      <p>{{ trip.notes|clean_text }}</p>
+    </section>
+  {% endif %}
+
+  <div class="section-heading">
+    <div>
+      <div class="eyebrow">YOUR PLAN</div>
+      <h2>Itinerary</h2>
+    </div>
+    <a class="button button-small" href="{{ url_for('add_itinerary_item', trip_id=trip.id) }}">+ Add item</a>
+  </div>
+
+  {% if items %}
+    <div class="itinerary-list">
+      {% for item in items %}
+        <article class="itinerary-item">
+          <div class="timeline-dot"></div>
+          <div class="itinerary-content">
+            <div class="itinerary-meta">
+              <span class="item-type">{{ item.item_type|clean_text }}</span>
+              <span>{{ item.item_datetime.strftime("%Y-%m-%d %H:%M") }}</span>
+            </div>
+            {% if item.description %}
+              <p>{{ item.description|clean_text }}</p>
+            {% endif %}
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  {% else %}
+    <section class="empty-state small">
+      <div class="empty-icon">＋</div>
+      <h2>Your itinerary is empty</h2>
+      <p class="muted">Add your flight, hotel, activities, and other trip details here.</p>
+      <a class="button" href="{{ url_for('add_itinerary_item', trip_id=trip.id) }}">Add first item</a>
+    </section>
+  {% endif %}
+{% endblock %}
